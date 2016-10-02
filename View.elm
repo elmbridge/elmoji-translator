@@ -37,5 +37,8 @@ view model =
                     ]
                     []
                 ]
+            , Html.p
+                [ Html.Attributes.class "center output-text emoji-size" ]
+                [ Html.text model.currentText ]
             ]
         ]
