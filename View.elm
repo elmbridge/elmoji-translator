@@ -10,15 +10,32 @@ import Html.Attributes
 view : Model.Model -> Html.Html Update.Msg
 view model =
     Html.div
-        [ Html.Attributes.class "skeleton-elm-project" ]
+        []
         [ Html.node "link"
             [ Html.Attributes.rel "stylesheet"
             , Html.Attributes.href "stylesheets/main.css"
             ]
             []
-        , Html.div
-            [ Html.Attributes.class "waves-effect waves-light btn-large"
-            , Html.Events.onClick Update.ChangeText
+        , Html.nav
+            []
+            [ Html.div
+                [ Html.Attributes.class "nav-wrapper light-blue lighten-2" ]
+                [ Html.div
+                    [ Html.Attributes.class "brand-logo center" ]
+                    [ Html.text "Elmoji Translator" ]
+                ]
             ]
-            [ Html.text model.buttonLabel ]
+        , Html.section
+            [ Html.Attributes.class "container" ]
+            [ Html.div
+                [ Html.Attributes.class "input-field" ]
+                [ Html.input
+                    [ Html.Attributes.type_ "text"
+                    , Html.Attributes.class "center"
+                    , Html.Attributes.placeholder "Let's Translate!"
+                    , Html.Events.onInput Update.SetCurrentText
+                    ]
+                    []
+                ]
+            ]
         ]
