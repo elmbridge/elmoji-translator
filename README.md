@@ -1,6 +1,6 @@
-## Skeleton Elm Project
+## Elmoji Translator
 
-Skeleton for an Elm Project in 0.17.1.
+Application for encoding secrets with emojis!
 
 #### Usage
 

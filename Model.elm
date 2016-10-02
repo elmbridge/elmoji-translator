@@ -2,9 +2,9 @@ module Model exposing (..)
 
 
 type alias Model =
-    { text : String }
+    { currentText : String }
 
 
 init : Model
 init =
-    { text = "hello world!" }
+    { currentText = "" }
