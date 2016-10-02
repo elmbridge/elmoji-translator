@@ -1,8 +1,26 @@
 @import "materialize-0.97.7.css";
 
-.skeleton-elm-project {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.output-text {
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+
+.emoji-size {
+  font-size: 3em;
+}
+
+.key-selector {
+  display: inline-block;
+  height: 1.3em;
+  padding: 0 0.1em;
+  border-radius: 20px;
+}
+
+.key-selector:not(.is-selected):hover {
+  background-color: #4fc3f7;
+  opacity: 0.3;
+}
+
+.key-selector.is-selected {
+  background-color: #4fc3f7;
 }
