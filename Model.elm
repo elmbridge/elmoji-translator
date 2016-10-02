@@ -1,13 +1,22 @@
 module Model exposing (..)
 
 
+type Direction
+    = TextToEmoji
+    | EmojiToText
+
+
 type alias Model =
-    { currentText : String }
+    { currentText : String
+    , direction : Direction
+    }
 
 
 init : Model
 init =
-    { currentText = "" }
+    { currentText = ""
+    , direction = TextToEmoji
+    }
 
 
 defaultKey : String

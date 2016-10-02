@@ -15,5 +15,9 @@ update msg model =
             { model | currentText = newText }
 
         ToggleDirection ->
-            -- currently, this does nothing!
-            model
+            case model.direction of
+                Model.TextToEmoji ->
+                    { model | direction = Model.EmojiToText }
+
+                Model.EmojiToText ->
+                    { model | direction = Model.TextToEmoji }
