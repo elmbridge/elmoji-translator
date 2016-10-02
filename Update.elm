@@ -11,5 +11,4 @@ update : Msg -> Model.Model -> Model.Model
 update msg model =
     case msg of
         SetCurrentText newText ->
-            -- currently, this does nothing!
-            model
+            { model | currentText = newText }
