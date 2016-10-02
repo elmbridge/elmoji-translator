@@ -5,6 +5,7 @@ import Model
 import Html
 import Html.Events
 import Html.Attributes
+import EmojiConverter
 
 
 view : Model.Model -> Html.Html Update.Msg
@@ -41,6 +42,11 @@ view model =
                 ]
             , Html.p
                 [ Html.Attributes.class "center output-text emoji-size" ]
-                [ Html.text model.currentText ]
+                [ Html.text (translateText model) ]
             ]
         ]
+
+
+translateText : Model.Model -> String
+translateText model =
+    EmojiConverter.textToEmoji Model.defaultKey model.currentText
