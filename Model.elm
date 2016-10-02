@@ -8,3 +8,8 @@ type alias Model =
 init : Model
 init =
     { currentText = "" }
+
+
+defaultKey : String
+defaultKey =
+    "😳"
