@@ -58,6 +58,16 @@ view model =
                 [ Html.Attributes.class "center output-text emoji-size" ]
                 [ Html.text (translateText model) ]
             ]
+        , Html.div
+            [ Html.Attributes.class "divider" ]
+            []
+        , Html.section
+            [ Html.Attributes.class "container" ]
+            [ Html.h4
+                [ Html.Attributes.class "center" ]
+                [ Html.text "Select Your Key" ]
+            , renderKeys
+            ]
         ]
 
 
@@ -69,3 +79,24 @@ translateText model =
 
         Model.EmojiToText ->
             EmojiConverter.emojiToText Model.defaultKey model.currentText
+
+
+renderKeys : Html.Html Update.Msg
+renderKeys =
+    Html.div
+        [ Html.Attributes.class "row" ]
+        (List.map (\emoji -> renderKey emoji) EmojiConverter.supportedEmojis)
+
+
+renderKey : String -> Html.Html Update.Msg
+renderKey emoji =
+    Html.div
+        [ Html.Attributes.class "col s2 m1 emoji-size" ]
+        [ Html.div
+            [ Html.Attributes.classList
+                [ ( "key-selector", True )
+                , ( "is-selected", emoji == Model.defaultKey )
+                ]
+            ]
+            [ Html.text emoji ]
+        ]
