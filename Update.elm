@@ -5,6 +5,7 @@ import Model
 
 type Msg
     = SetCurrentText String
+    | SetSelectedKey String
     | ToggleDirection
 
 
@@ -13,6 +14,9 @@ update msg model =
     case msg of
         SetCurrentText newText ->
             { model | currentText = newText }
+
+        SetSelectedKey newKey ->
+            { model | selectedKey = newKey }
 
         ToggleDirection ->
             case model.direction of
