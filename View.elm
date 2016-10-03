@@ -99,6 +99,7 @@ renderKey emoji =
                 [ ( "key-selector", True )
                 , ( "is-selected", emoji == Model.defaultKey )
                 ]
+            , Html.Events.onClick (Update.SetSelectedKey emoji)
             ]
             [ Html.text emoji ]
         ]
