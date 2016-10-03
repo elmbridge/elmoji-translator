@@ -66,7 +66,7 @@ view model =
             [ Html.h4
                 [ Html.Attributes.class "center" ]
                 [ Html.text "Select Your Key" ]
-            , renderKeys
+            , (renderKeys model)
             ]
         ]
 
@@ -75,27 +75,27 @@ translateText : Model.Model -> String
 translateText model =
     case model.direction of
         Model.TextToEmoji ->
-            EmojiConverter.textToEmoji Model.defaultKey model.currentText
+            EmojiConverter.textToEmoji model.selectedKey model.currentText
 
         Model.EmojiToText ->
-            EmojiConverter.emojiToText Model.defaultKey model.currentText
+            EmojiConverter.emojiToText model.selectedKey model.currentText
 
 
-renderKeys : Html.Html Update.Msg
-renderKeys =
+renderKeys : Model.Model -> Html.Html Update.Msg
+renderKeys model =
     Html.div
         [ Html.Attributes.class "row" ]
-        (List.map (\emoji -> renderKey emoji) EmojiConverter.supportedEmojis)
+        (List.map (\emoji -> renderKey model emoji) EmojiConverter.supportedEmojis)
 
 
-renderKey : String -> Html.Html Update.Msg
-renderKey emoji =
+renderKey : Model.Model -> String -> Html.Html Update.Msg
+renderKey model emoji =
     Html.div
         [ Html.Attributes.class "col s2 m1 emoji-size" ]
         [ Html.div
             [ Html.Attributes.classList
                 [ ( "key-selector", True )
-                , ( "is-selected", emoji == Model.defaultKey )
+                , ( "is-selected", emoji == model.selectedKey )
                 ]
             , Html.Events.onClick (Update.SetSelectedKey emoji)
             ]
