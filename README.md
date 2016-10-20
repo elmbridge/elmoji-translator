@@ -7,6 +7,6 @@ Skeleton for an Elm Project in 0.17.1.
 Requires [the Elm Platform](https://guide.elm-lang.org/get_started.html) to run. to launch:
 
 ```sh
-$ elm-make Main.elm --output dist/main.js
-$ open index.html
+elm-reactor
+open http://localhost:8000/Main.elm
 ```
