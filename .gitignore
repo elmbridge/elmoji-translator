@@ -1,3 +1,4 @@
-build/
-dist/
-elm-stuff/
+/build/
+/dist/
+/elm-stuff/
+/index.html
