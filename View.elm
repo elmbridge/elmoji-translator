@@ -20,5 +20,5 @@ view model =
             [ Html.Attributes.class "waves-effect waves-light btn-large"
             , Html.Events.onClick Update.ChangeText
             ]
-            [ Html.text model.text ]
+            [ Html.text model.buttonLabel ]
         ]
