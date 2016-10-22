@@ -44,12 +44,12 @@ view model =
                     []
                     [ Html.text "Translate Text"
                     , Html.input
-                        [ Html.Attributes.type' "checkbox"
-                        , Html.Events.onClick Update.ToggleDirection
-                        ]
+                        [ Html.Attributes.type' "checkbox" ]
                         []
                     , Html.span
-                        [ Html.Attributes.class "lever" ]
+                        [ Html.Attributes.class "lever"
+                        , Html.Events.onClick Update.ToggleDirection
+                        ]
                         []
                     , Html.text "Translate Emoji"
                     ]
