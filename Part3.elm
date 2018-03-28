@@ -1,4 +1,4 @@
-module Main exposing (..)
+module Part3 exposing (..)
 
 import EmojiConverter
 import Html

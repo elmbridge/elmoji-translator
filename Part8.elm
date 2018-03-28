@@ -1,4 +1,4 @@
-module Main exposing (..)
+module Part8 exposing (..)
 
 import EmojiConverter
 import Html
@@ -137,7 +137,7 @@ view model =
             [ Html.h4
                 [ Html.Attributes.class "center" ]
                 [ Html.text "Select Your Key" ]
-            , renderKeys
+            , renderKeys model
             ]
         ]
 
@@ -146,27 +146,27 @@ translateText : Model -> String
 translateText model =
     case model.direction of
         TextToEmoji ->
-            EmojiConverter.textToEmoji defaultKey model.currentText
+            EmojiConverter.textToEmoji model.selectedKey model.currentText
 
         EmojiToText ->
-            EmojiConverter.emojiToText defaultKey model.currentText
+            EmojiConverter.emojiToText model.selectedKey model.currentText
 
 
-renderKeys : Html.Html Msg
-renderKeys =
+renderKeys : Model -> Html.Html Msg
+renderKeys model =
     Html.div
         [ Html.Attributes.class "row" ]
-        (List.map (\emoji -> renderKey emoji) EmojiConverter.supportedEmojis)
+        (List.map (\emoji -> renderKey model emoji) EmojiConverter.supportedEmojis)
 
 
-renderKey : String -> Html.Html Msg
-renderKey emoji =
+renderKey : Model -> String -> Html.Html Msg
+renderKey model emoji =
     Html.div
         [ Html.Attributes.class "col s2 m1 emoji-size" ]
         [ Html.div
             [ Html.Attributes.classList
                 [ ( "key-selector", True )
-                , ( "is-selected", emoji == defaultKey )
+                , ( "is-selected", emoji == model.selectedKey )
                 ]
             , Html.Events.onClick (SetSelectedKey emoji)
             ]

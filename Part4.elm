@@ -1,4 +1,4 @@
-module Main exposing (..)
+module Part4 exposing (..)
 
 import EmojiConverter
 import Html
@@ -22,22 +22,13 @@ main =
 -- MODEL
 
 
-type Direction
-    = TextToEmoji
-    | EmojiToText
-
-
 type alias Model =
-    { currentText : String
-    , direction : Direction
-    }
+    { currentText : String }
 
 
 init : Model
 init =
-    { currentText = ""
-    , direction = TextToEmoji
-    }
+    { currentText = "" }
 
 
 defaultKey : String
@@ -61,12 +52,8 @@ update msg model =
             { model | currentText = newText }
 
         ToggleDirection ->
-            case model.direction of
-                TextToEmoji ->
-                    { model | direction = EmojiToText }
-
-                EmojiToText ->
-                    { model | direction = TextToEmoji }
+            -- currently, this does nothing!
+            model
 
 
 
@@ -123,45 +110,9 @@ view model =
                 [ Html.Attributes.class "center output-text emoji-size" ]
                 [ Html.text (translateText model) ]
             ]
-        , Html.div
-            [ Html.Attributes.class "divider" ]
-            []
-        , Html.section
-            [ Html.Attributes.class "container" ]
-            [ Html.h4
-                [ Html.Attributes.class "center" ]
-                [ Html.text "Select Your Key" ]
-            , renderKeys
-            ]
         ]
 
 
 translateText : Model -> String
 translateText model =
-    case model.direction of
-        TextToEmoji ->
-            EmojiConverter.textToEmoji defaultKey model.currentText
-
-        EmojiToText ->
-            EmojiConverter.emojiToText defaultKey model.currentText
-
-
-renderKeys : Html.Html Msg
-renderKeys =
-    Html.div
-        [ Html.Attributes.class "row" ]
-        (List.map (\emoji -> renderKey emoji) EmojiConverter.supportedEmojis)
-
-
-renderKey : String -> Html.Html Msg
-renderKey emoji =
-    Html.div
-        [ Html.Attributes.class "col s2 m1 emoji-size" ]
-        [ Html.div
-            [ Html.Attributes.classList
-                [ ( "key-selector", True )
-                , ( "is-selected", emoji == defaultKey )
-                ]
-            ]
-            [ Html.text emoji ]
-        ]
+    EmojiConverter.textToEmoji defaultKey model.currentText

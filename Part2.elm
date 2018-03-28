@@ -1,6 +1,5 @@
-module Main exposing (..)
+module Part2 exposing (..)
 
-import EmojiConverter
 import Html
 import Html.Attributes
 import Html.Events
@@ -31,18 +30,12 @@ init =
     { currentText = "" }
 
 
-defaultKey : String
-defaultKey =
-    "😳"
-
-
 
 -- UPDATE
 
 
 type Msg
     = SetCurrentText String
-    | ToggleDirection
 
 
 update : Msg -> Model -> Model
@@ -50,10 +43,6 @@ update msg model =
     case msg of
         SetCurrentText newText ->
             { model | currentText = newText }
-
-        ToggleDirection ->
-            -- currently, this does nothing!
-            model
 
 
 
@@ -90,29 +79,8 @@ view model =
                     ]
                     []
                 ]
-            , Html.div
-                [ Html.Attributes.class "switch center" ]
-                [ Html.label
-                    []
-                    [ Html.text "Translate Text"
-                    , Html.input
-                        [ Html.Attributes.type_ "checkbox"
-                        , Html.Events.onClick ToggleDirection
-                        ]
-                        []
-                    , Html.span
-                        [ Html.Attributes.class "lever" ]
-                        []
-                    , Html.text "Translate Emoji"
-                    ]
-                ]
             , Html.p
                 [ Html.Attributes.class "center output-text emoji-size" ]
-                [ Html.text (translateText model) ]
+                [ Html.text model.currentText ]
             ]
         ]
-
-
-translateText : Model -> String
-translateText model =
-    EmojiConverter.textToEmoji defaultKey model.currentText

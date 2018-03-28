@@ -1,4 +1,4 @@
-module Main exposing (..)
+module Part7 exposing (..)
 
 import EmojiConverter
 import Html
@@ -30,6 +30,7 @@ type Direction
 type alias Model =
     { currentText : String
     , direction : Direction
+    , selectedKey : String
     }
 
 
@@ -37,6 +38,7 @@ init : Model
 init =
     { currentText = ""
     , direction = TextToEmoji
+    , selectedKey = defaultKey
     }
 
 
@@ -51,6 +53,7 @@ defaultKey =
 
 type Msg
     = SetCurrentText String
+    | SetSelectedKey String
     | ToggleDirection
 
 
@@ -59,6 +62,9 @@ update msg model =
     case msg of
         SetCurrentText newText ->
             { model | currentText = newText }
+
+        SetSelectedKey newKey ->
+            { model | selectedKey = newKey }
 
         ToggleDirection ->
             case model.direction of
@@ -123,6 +129,16 @@ view model =
                 [ Html.Attributes.class "center output-text emoji-size" ]
                 [ Html.text (translateText model) ]
             ]
+        , Html.div
+            [ Html.Attributes.class "divider" ]
+            []
+        , Html.section
+            [ Html.Attributes.class "container" ]
+            [ Html.h4
+                [ Html.Attributes.class "center" ]
+                [ Html.text "Select Your Key" ]
+            , renderKeys
+            ]
         ]
 
 
@@ -134,3 +150,25 @@ translateText model =
 
         EmojiToText ->
             EmojiConverter.emojiToText defaultKey model.currentText
+
+
+renderKeys : Html.Html Msg
+renderKeys =
+    Html.div
+        [ Html.Attributes.class "row" ]
+        (List.map (\emoji -> renderKey emoji) EmojiConverter.supportedEmojis)
+
+
+renderKey : String -> Html.Html Msg
+renderKey emoji =
+    Html.div
+        [ Html.Attributes.class "col s2 m1 emoji-size" ]
+        [ Html.div
+            [ Html.Attributes.classList
+                [ ( "key-selector", True )
+                , ( "is-selected", emoji == defaultKey )
+                ]
+            , Html.Events.onClick (SetSelectedKey emoji)
+            ]
+            [ Html.text emoji ]
+        ]
