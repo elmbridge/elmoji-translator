@@ -1,14 +1,85 @@
-module View exposing (..)
+module Main exposing (..)
 
-import Update
-import Model
-import Html
-import Html.Events
-import Html.Attributes
 import EmojiConverter
+import Html
+import Html.Attributes
+import Html.Events
 
 
-view : Model.Model -> Html.Html Update.Msg
+-- MAIN
+
+
+main : Program Never Model Msg
+main =
+    Html.beginnerProgram
+        { model = init
+        , view = view
+        , update = update
+        }
+
+
+
+-- MODEL
+
+
+type Direction
+    = TextToEmoji
+    | EmojiToText
+
+
+type alias Model =
+    { currentText : String
+    , direction : Direction
+    , selectedKey : String
+    }
+
+
+init : Model
+init =
+    { currentText = ""
+    , direction = TextToEmoji
+    , selectedKey = defaultKey
+    }
+
+
+defaultKey : String
+defaultKey =
+    "😳"
+
+
+
+-- UPDATE
+
+
+type Msg
+    = SetCurrentText String
+    | SetSelectedKey String
+    | ToggleDirection
+
+
+update : Msg -> Model -> Model
+update msg model =
+    case msg of
+        SetCurrentText newText ->
+            { model | currentText = newText }
+
+        SetSelectedKey newKey ->
+            { model | selectedKey = newKey }
+
+        ToggleDirection ->
+            case model.direction of
+                TextToEmoji ->
+                    { model | direction = EmojiToText }
+
+                EmojiToText ->
+                    { model | direction = TextToEmoji }
+
+
+
+-- VIEW
+
+
+view : Model -> Html.Html Msg
 view model =
     Html.div
         []
@@ -34,7 +105,7 @@ view model =
                     [ Html.Attributes.type_ "text"
                     , Html.Attributes.class "center"
                     , Html.Attributes.placeholder "Let's Translate!"
-                    , Html.Events.onInput Update.SetCurrentText
+                    , Html.Events.onInput SetCurrentText
                     ]
                     []
                 ]
@@ -45,7 +116,7 @@ view model =
                     [ Html.text "Translate Text"
                     , Html.input
                         [ Html.Attributes.type_ "checkbox"
-                        , Html.Events.onClick Update.ToggleDirection
+                        , Html.Events.onClick ToggleDirection
                         ]
                         []
                     , Html.span
@@ -66,38 +137,38 @@ view model =
             [ Html.h4
                 [ Html.Attributes.class "center" ]
                 [ Html.text "Select Your Key" ]
-            , (renderKeys model)
+            , renderKeys
             ]
         ]
 
 
-translateText : Model.Model -> String
+translateText : Model -> String
 translateText model =
     case model.direction of
-        Model.TextToEmoji ->
-            EmojiConverter.textToEmoji model.selectedKey model.currentText
+        TextToEmoji ->
+            EmojiConverter.textToEmoji defaultKey model.currentText
 
-        Model.EmojiToText ->
-            EmojiConverter.emojiToText model.selectedKey model.currentText
+        EmojiToText ->
+            EmojiConverter.emojiToText defaultKey model.currentText
 
 
-renderKeys : Model.Model -> Html.Html Update.Msg
-renderKeys model =
+renderKeys : Html.Html Msg
+renderKeys =
     Html.div
         [ Html.Attributes.class "row" ]
-        (List.map (\emoji -> renderKey model emoji) EmojiConverter.supportedEmojis)
+        (List.map (\emoji -> renderKey emoji) EmojiConverter.supportedEmojis)
 
 
-renderKey : Model.Model -> String -> Html.Html Update.Msg
-renderKey model emoji =
+renderKey : String -> Html.Html Msg
+renderKey emoji =
     Html.div
         [ Html.Attributes.class "col s2 m1 emoji-size" ]
         [ Html.div
             [ Html.Attributes.classList
                 [ ( "key-selector", True )
-                , ( "is-selected", emoji == model.selectedKey )
+                , ( "is-selected", emoji == defaultKey )
                 ]
-            , Html.Events.onClick (Update.SetSelectedKey emoji)
+            , Html.Events.onClick (SetSelectedKey emoji)
             ]
             [ Html.text emoji ]
         ]
