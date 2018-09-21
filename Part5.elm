@@ -1,9 +1,10 @@
-module Part5 exposing (..)
+module Part5 exposing (Direction(..), Model, Msg(..), defaultKey, init, main, translateText, update, view)
 
 import EmojiConverter
 import Html
 import Html.Attributes
 import Html.Events
+
 
 
 -- MAIN

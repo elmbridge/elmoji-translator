@@ -1,8 +1,9 @@
-module HelloWorld exposing (..)
+module HelloWorld exposing (Model, Msg(..), init, main, update, view)
 
 import Html
 import Html.Attributes
 import Html.Events
+
 
 
 -- MAIN
@@ -44,6 +45,7 @@ update msg model =
         ChangeText ->
             if model.buttonLabel == "hello world!" then
                 { model | buttonLabel = "goodbye world!" }
+
             else
                 { model | buttonLabel = "hello world!" }
 

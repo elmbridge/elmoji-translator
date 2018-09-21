@@ -1,8 +1,9 @@
-module Part1 exposing (..)
+module Part1 exposing (Model, Msg(..), init, main, update, view)
 
 import Html
 import Html.Attributes
 import Html.Events
+
 
 
 -- MAIN
