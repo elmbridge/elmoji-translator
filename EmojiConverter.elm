@@ -14,13 +14,12 @@ type alias Key =
 
 textToEmoji : Key -> String -> String
 textToEmoji key text =
-    convert supportedLetters (rotateEmojis key) emptyString text
+    convert supportedLetters (rotateEmojis key) everyCharacter text
 
 
-emptyString : Regex.Regex
-emptyString =
-    Maybe.withDefault Regex.never <|
-        Regex.fromString ""
+everyCharacter : Regex.Regex
+everyCharacter =
+    Maybe.withDefault Regex.never (Regex.fromString ".")
 
 
 emojiToText : Key -> String -> String
