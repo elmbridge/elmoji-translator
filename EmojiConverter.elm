@@ -24,9 +24,7 @@ emojiToText key emojis =
 
 splitEveryCharacter : String -> List String
 splitEveryCharacter =
-    Regex.fromString "."
-        |> Maybe.withDefault Regex.never
-        |> Regex.split
+    String.split ""
 
 
 splitEveryEmoji : String -> List String
