@@ -14,15 +14,22 @@ type alias Key =
 
 textToEmoji : Key -> String -> String
 textToEmoji key text =
-    convert supportedLetters (rotateEmojis key) (Regex.regex "") text
+    convert supportedLetters (rotateEmojis key) emptyString text
+
+
+emptyString : Regex.Regex
+emptyString =
+    Maybe.withDefault Regex.never <|
+        Regex.fromString ""
 
 
 emojiToText : Key -> String -> String
 emojiToText key emojis =
     let
         splitter =
-            -- due to JavaScript issues with splitting and unicode, we maually split the string.
-            Regex.regex "([\\uD800-\\uDBFF][\\uDC00-\\uDFFF])"
+            Maybe.withDefault Regex.never <|
+                -- due to JavaScript issues with splitting and unicode, we maually split the string.
+                Regex.fromString "([\\uD800-\\uDBFF][\\uDC00-\\uDFFF])"
     in
     convert (rotateEmojis key) supportedLetters splitter emojis
 
@@ -40,7 +47,7 @@ convert orderedKeys orderedValues splitter string =
                 |> Maybe.withDefault key
     in
     string
-        |> Regex.split Regex.All splitter
+        |> Regex.split splitter
         |> List.map getValueOrReturnKey
         |> String.join ""
 

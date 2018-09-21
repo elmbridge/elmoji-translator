@@ -1,19 +1,21 @@
 module Part3 exposing (Model, Msg(..), defaultKey, init, main, translateText, update, view)
 
+import Browser
 import EmojiConverter
 import Html
 import Html.Attributes
 import Html.Events
+import Regex
 
 
 
 -- MAIN
 
 
-main : Program Never Model Msg
+main : Program () Model Msg
 main =
-    Html.beginnerProgram
-        { model = init
+    Browser.sandbox
+        { init = init
         , view = view
         , update = update
         }
