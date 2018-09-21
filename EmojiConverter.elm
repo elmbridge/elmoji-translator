@@ -28,11 +28,15 @@ splitEveryCharacter =
 
 
 splitEveryEmoji : String -> List String
-splitEveryEmoji =
+splitEveryEmoji str =
     -- due to JavaScript issues with splitting and unicode, we maually split the string.
     Regex.fromString "([\\uD800-\\uDBFF][\\uDC00-\\uDFFF])"
         |> Maybe.withDefault Regex.never
-        |> Regex.split
+        |> Regex.find
+        |> (\matcher ->
+                matcher str
+                    |> List.map .match
+           )
 
 
 convert : List String -> List String -> (String -> List String) -> String -> String
