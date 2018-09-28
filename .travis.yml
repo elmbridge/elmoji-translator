@@ -4,15 +4,15 @@ language: node_js
 node_js: "10"
 
 install:
-  - npm install elm@elm0.18.0
+  - npm install elm@elm0.19.0
 
 script:
-  - npx elm-make --yes HelloWorld.elm
-  - npx elm-make --yes Part1.elm
-  - npx elm-make --yes Part2.elm
-  - npx elm-make --yes Part3.elm
-  - npx elm-make --yes Part4.elm
-  - npx elm-make --yes Part5.elm
-  - npx elm-make --yes Part6.elm
-  - npx elm-make --yes Part7.elm
-  - npx elm-make --yes Part8.elm
+  - npx elm make HelloWorld.elm
+  - npx elm make Part1.elm
+  - npx elm make Part2.elm
+  - npx elm make Part3.elm
+  - npx elm make Part4.elm
+  - npx elm make Part5.elm
+  - npx elm make Part6.elm
+  - npx elm make Part7.elm
+  - npx elm make Part8.elm
