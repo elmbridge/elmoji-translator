@@ -1,11 +1,11 @@
-module EmojiConverter exposing (textToEmoji, emojiToText, supportedEmojis)
+module EmojiConverter exposing (emojiToText, supportedEmojis, textToEmoji)
 
-import List
-import List.Extra
-import String
 import Char
 import Dict
+import List
+import List.Extra
 import Regex
+import String
 
 
 type alias Key =
@@ -14,20 +14,32 @@ type alias Key =
 
 textToEmoji : Key -> String -> String
 textToEmoji key text =
-    convert supportedLetters (rotateEmojis key) (Regex.regex "") text
+    convert supportedLetters (rotateEmojis key) splitEveryCharacter text
 
 
 emojiToText : Key -> String -> String
 emojiToText key emojis =
-    let
-        splitter =
-            -- due to JavaScript issues with splitting and unicode, we maually split the string.
-            (Regex.regex "([\\uD800-\\uDBFF][\\uDC00-\\uDFFF])")
-    in
-        convert (rotateEmojis key) supportedLetters splitter emojis
+    convert (rotateEmojis key) supportedLetters splitEveryEmoji emojis
 
 
-convert : List String -> List String -> Regex.Regex -> String -> String
+splitEveryCharacter : String -> List String
+splitEveryCharacter =
+    String.split ""
+
+
+splitEveryEmoji : String -> List String
+splitEveryEmoji str =
+    -- due to JavaScript issues with splitting and unicode, we maually split the string.
+    Regex.fromString "([\\uD800-\\uDBFF][\\uDC00-\\uDFFF])"
+        |> Maybe.withDefault Regex.never
+        |> Regex.find
+        |> (\matcher ->
+                matcher str
+                    |> List.map .match
+           )
+
+
+convert : List String -> List String -> (String -> List String) -> String -> String
 convert orderedKeys orderedValues splitter string =
     let
         lookupTable =
@@ -39,10 +51,10 @@ convert orderedKeys orderedValues splitter string =
                 |> Dict.get key
                 |> Maybe.withDefault key
     in
-        string
-            |> Regex.split Regex.All splitter
-            |> List.map (getValueOrReturnKey)
-            |> String.join ""
+    string
+        |> splitter
+        |> List.map getValueOrReturnKey
+        |> String.join ""
 
 
 rotateEmojis : Key -> List String
@@ -50,9 +62,8 @@ rotateEmojis key =
     supportedEmojis
         |> List.Extra.elemIndex key
         -- if the key can't be found, default to the first emoji listed.
-        |>
-            Maybe.withDefault 0
-        |> (flip List.Extra.splitAt supportedEmojis)
+        |> Maybe.withDefault 0
+        |> (\a -> List.Extra.splitAt a supportedEmojis)
         |> (\( head, tail ) -> [ tail, head ])
         |> List.concat
 
@@ -61,9 +72,11 @@ supportedLetters : List String
 supportedLetters =
     [ -- lowercase letters
       List.range 97 122
-      -- uppercase letters
+
+    -- uppercase letters
     , List.range 65 90
-      -- numbers
+
+    -- numbers
     , List.range 48 57
     ]
         |> List.concat

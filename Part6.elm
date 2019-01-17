@@ -1,18 +1,20 @@
-module Part6 exposing (..)
+module Part6 exposing (Direction(..), Model, Msg(..), defaultKey, init, main, renderKey, renderKeys, translateText, update, view)
 
+import Browser
 import EmojiConverter
 import Html
 import Html.Attributes
 import Html.Events
 
 
+
 -- MAIN
 
 
-main : Program Never Model Msg
+main : Program () Model Msg
 main =
-    Html.beginnerProgram
-        { model = init
+    Browser.sandbox
+        { init = init
         , view = view
         , update = update
         }

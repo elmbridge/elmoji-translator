@@ -1,17 +1,19 @@
-module Part2 exposing (..)
+module Part2 exposing (Model, Msg(..), init, main, update, view)
 
+import Browser
 import Html
 import Html.Attributes
 import Html.Events
 
 
+
 -- MAIN
 
 
-main : Program Never Model Msg
+main : Program () Model Msg
 main =
-    Html.beginnerProgram
-        { model = init
+    Browser.sandbox
+        { init = init
         , view = view
         , update = update
         }
