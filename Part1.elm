@@ -1,9 +1,9 @@
 module Part1 exposing (Model, Msg(..), init, main, update, view)
 
 import Browser
-import Html
-import Html.Attributes
-import Html.Events
+import Html exposing (..)
+import Html.Attributes exposing (..)
+import Html.Events exposing (..)
 
 
 
@@ -52,33 +52,33 @@ update msg model =
 -- VIEW
 
 
-view : Model -> Html.Html Msg
+view : Model -> Html Msg
 view model =
-    Html.div
+    div
         []
-        [ Html.node "link"
-            [ Html.Attributes.rel "stylesheet"
-            , Html.Attributes.href "stylesheets/main.css"
+        [ node "link"
+            [ rel "stylesheet"
+            , href "stylesheets/main.css"
             ]
             []
-        , Html.nav
+        , nav
             []
-            [ Html.div
-                [ Html.Attributes.class "nav-wrapper light-blue lighten-2" ]
-                [ Html.div
-                    [ Html.Attributes.class "brand-logo center" ]
-                    [ Html.text "Elmoji Translator" ]
+            [ div
+                [ class "nav-wrapper light-blue lighten-2" ]
+                [ div
+                    [ class "brand-logo center" ]
+                    [ text "Elmoji Translator" ]
                 ]
             ]
-        , Html.section
-            [ Html.Attributes.class "container" ]
-            [ Html.div
-                [ Html.Attributes.class "input-field" ]
-                [ Html.input
-                    [ Html.Attributes.type_ "text"
-                    , Html.Attributes.class "center"
-                    , Html.Attributes.placeholder "Let's Translate!"
-                    , Html.Events.onInput SetCurrentText
+        , section
+            [ class "container" ]
+            [ div
+                [ class "input-field" ]
+                [ input
+                    [ type_ "text"
+                    , class "center"
+                    , placeholder "Let's Translate!"
+                    , onInput SetCurrentText
                     ]
                     []
                 ]

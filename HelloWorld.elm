@@ -1,9 +1,9 @@
 module HelloWorld exposing (Model, Msg(..), init, main, update, view)
 
 import Browser
-import Html
-import Html.Attributes
-import Html.Events
+import Html exposing (..)
+import Html.Attributes exposing (..)
+import Html.Events exposing (..)
 
 
 
@@ -55,18 +55,18 @@ update msg model =
 -- VIEW
 
 
-view : Model -> Html.Html Msg
+view : Model -> Html Msg
 view model =
-    Html.div
-        [ Html.Attributes.class "skeleton-elm-project" ]
-        [ Html.node "link"
-            [ Html.Attributes.rel "stylesheet"
-            , Html.Attributes.href "stylesheets/main.css"
+    div
+        [ class "skeleton-elm-project" ]
+        [ node "link"
+            [ rel "stylesheet"
+            , href "stylesheets/main.css"
             ]
             []
-        , Html.div
-            [ Html.Attributes.class "waves-effect waves-light btn-large"
-            , Html.Events.onClick ChangeText
+        , div
+            [ class "waves-effect waves-light btn-large"
+            , onClick ChangeText
             ]
-            [ Html.text model.buttonLabel ]
+            [ text model.buttonLabel ]
         ]
