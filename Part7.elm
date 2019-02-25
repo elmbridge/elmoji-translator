@@ -2,9 +2,9 @@ module Part7 exposing (Direction(..), Model, Msg(..), defaultKey, init, main, re
 
 import Browser
 import EmojiConverter
-import Html
-import Html.Attributes
-import Html.Events
+import Html exposing (..)
+import Html.Attributes exposing (..)
+import Html.Events exposing (..)
 
 
 
@@ -81,64 +81,64 @@ update msg model =
 -- VIEW
 
 
-view : Model -> Html.Html Msg
+view : Model -> Html Msg
 view model =
-    Html.div
+    div
         []
-        [ Html.node "link"
-            [ Html.Attributes.rel "stylesheet"
-            , Html.Attributes.href "stylesheets/main.css"
+        [ node "link"
+            [ rel "stylesheet"
+            , href "stylesheets/main.css"
             ]
             []
-        , Html.nav
+        , nav
             []
-            [ Html.div
-                [ Html.Attributes.class "nav-wrapper light-blue lighten-2" ]
-                [ Html.div
-                    [ Html.Attributes.class "brand-logo center" ]
-                    [ Html.text "Elmoji Translator" ]
+            [ div
+                [ class "nav-wrapper light-blue lighten-2" ]
+                [ div
+                    [ class "brand-logo center" ]
+                    [ text "Elmoji Translator" ]
                 ]
             ]
-        , Html.section
-            [ Html.Attributes.class "container" ]
-            [ Html.div
-                [ Html.Attributes.class "input-field" ]
-                [ Html.input
-                    [ Html.Attributes.type_ "text"
-                    , Html.Attributes.class "center"
-                    , Html.Attributes.placeholder "Let's Translate!"
-                    , Html.Events.onInput SetCurrentText
+        , section
+            [ class "container" ]
+            [ div
+                [ class "input-field" ]
+                [ input
+                    [ type_ "text"
+                    , class "center"
+                    , placeholder "Let's Translate!"
+                    , onInput SetCurrentText
                     ]
                     []
                 ]
-            , Html.div
-                [ Html.Attributes.class "switch center" ]
-                [ Html.label
+            , div
+                [ class "switch center" ]
+                [ label
                     []
-                    [ Html.text "Translate Text"
-                    , Html.input
-                        [ Html.Attributes.type_ "checkbox"
-                        , Html.Events.onClick ToggleDirection
+                    [ text "Translate Text"
+                    , input
+                        [ type_ "checkbox"
+                        , onClick ToggleDirection
                         ]
                         []
-                    , Html.span
-                        [ Html.Attributes.class "lever" ]
+                    , span
+                        [ class "lever" ]
                         []
-                    , Html.text "Translate Emoji"
+                    , text "Translate Emoji"
                     ]
                 ]
-            , Html.p
-                [ Html.Attributes.class "center output-text emoji-size" ]
-                [ Html.text (translateText model) ]
+            , p
+                [ class "center output-text emoji-size" ]
+                [ text (translateText model) ]
             ]
-        , Html.div
-            [ Html.Attributes.class "divider" ]
+        , div
+            [ class "divider" ]
             []
-        , Html.section
-            [ Html.Attributes.class "container" ]
-            [ Html.h4
-                [ Html.Attributes.class "center" ]
-                [ Html.text "Select Your Key" ]
+        , section
+            [ class "container" ]
+            [ h4
+                [ class "center" ]
+                [ text "Select Your Key" ]
             , renderKeys
             ]
         ]
@@ -154,23 +154,23 @@ translateText model =
             EmojiConverter.emojiToText defaultKey model.currentText
 
 
-renderKeys : Html.Html Msg
+renderKeys : Html Msg
 renderKeys =
-    Html.div
-        [ Html.Attributes.class "row" ]
+    div
+        [ class "row" ]
         (List.map (\emoji -> renderKey emoji) EmojiConverter.supportedEmojis)
 
 
-renderKey : String -> Html.Html Msg
+renderKey : String -> Html Msg
 renderKey emoji =
-    Html.div
-        [ Html.Attributes.class "col s2 m1 emoji-size" ]
-        [ Html.div
-            [ Html.Attributes.classList
+    div
+        [ class "col s2 m1 emoji-size" ]
+        [ div
+            [ classList
                 [ ( "key-selector", True )
                 , ( "is-selected", emoji == defaultKey )
                 ]
-            , Html.Events.onClick (SetSelectedKey emoji)
+            , onClick (SetSelectedKey emoji)
             ]
-            [ Html.text emoji ]
+            [ text emoji ]
         ]
