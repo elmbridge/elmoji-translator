@@ -1,18 +1,17 @@
 sudo: false
-
-language: node_js
-node_js: "10"
-
-install:
-  - npm install elm@elm0.19.0
+language: elm
+elm:
+  - latest-0.19.1
+elm_test: 0.19.1
+elm_format: 0.8.2
 
 script:
-  - npx elm make HelloWorld.elm
-  - npx elm make Part1.elm
-  - npx elm make Part2.elm
-  - npx elm make Part3.elm
-  - npx elm make Part4.elm
-  - npx elm make Part5.elm
-  - npx elm make Part6.elm
-  - npx elm make Part7.elm
-  - npx elm make Part8.elm
+  - elm make HelloWorld.elm
+  - elm make Part1.elm
+  - elm make Part2.elm
+  - elm make Part3.elm
+  - elm make Part4.elm
+  - elm make Part5.elm
+  - elm make Part6.elm
+  - elm make Part7.elm
+  - elm make Part8.elm
