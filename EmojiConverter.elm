@@ -1,11 +1,8 @@
 module EmojiConverter exposing (emojiToText, supportedEmojis, textToEmoji)
 
-import Char
 import Dict
-import List
 import List.Extra
 import Regex
-import String
 
 
 type alias Key =
